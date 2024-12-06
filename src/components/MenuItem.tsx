@@ -15,7 +15,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ id, name, price, image, onAddToCart
     <CardContent>
       <Typography variant="h6">{name}</Typography>
       <Typography variant="body2" color="textSecondary">
-        ${price.toFixed(2)}
+        ${price.toFixed(0)}
       </Typography>
       <Typography variant="body2" color="textSecondary">
         商品ID: {id}
