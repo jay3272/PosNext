@@ -1,42 +1,38 @@
 import Database from 'better-sqlite3'; 
-import path from 'path';
-import fs from 'fs';
 
-// 定義資料庫檔案的路徑
-const dbDirectory = path.resolve(process.cwd(), 'db');
-const dbPath = path.resolve(dbDirectory, 'order.db');
+let db;
 
-// 檢查並創建 db 目錄（如果不存在）
-if (!fs.existsSync(dbDirectory)) {
-  fs.mkdirSync(dbDirectory, { recursive: true });
+try {
+  db = new Database('./order.db', { verbose: console.log });
+} catch (error) {
+  console.error("Database connection error:", error); // 記錄資料庫連接錯誤
 }
 
-// 初始化資料庫檔案
-const db = new Database(dbPath);
-
-// 檢查資料庫中是否已有表格
-const tables = db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all();
-console.log('Tables:', tables);
-
-// 建立 `orders` 表格 (如果尚未存在)
-db.exec(`
-  CREATE TABLE IF NOT EXISTS orders (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    totalAmount TEXT NOT NULL,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-  );
-`);
-
-// 建立 `cart_items` 表格 (如果尚未存在)
-db.exec(`
-  CREATE TABLE IF NOT EXISTS cart_items (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    orderId INTEGER NOT NULL,
-    name TEXT NOT NULL,
-    price REAL NOT NULL,
-    quantity INTEGER NOT NULL,
-    FOREIGN KEY (orderId) REFERENCES orders(id)
-  );
-`);
-
-export default db;
+export function insertOrder(order) {
+    const { cart, totalAmount } = order;
+  
+    // 插入訂單總金額
+    const stmt = db.prepare('INSERT INTO orders (totalAmount) VALUES (?)');
+    const result = stmt.run(totalAmount);
+  
+    // 插入每一項商品
+    cart.forEach((item) => {
+      const itemStmt = db.prepare('INSERT INTO order_items (orderId, itemName, price, quantity) VALUES (?, ?, ?, ?)');
+      itemStmt.run(result.lastInsertRowid, item.name, item.price, item.quantity);
+    });
+  }
+  
+  // 查詢所有訂單
+  export function getOrders() {
+    // 查詢 orders 表中的所有訂單資料
+    const stmt = db.prepare(`
+      SELECT orders.id, orders.totalAmount, 
+             GROUP_CONCAT(order_items.itemName || ' (x' || CAST(order_items.quantity AS TEXT) || ')', ', ') AS items
+      FROM orders
+      LEFT JOIN order_items ON orders.id = order_items.orderId
+      GROUP BY orders.id
+    `);
+  
+    return stmt.all();
+    console.log("Fetched orders:", orders); // 查看獲取的訂單資料
+  }

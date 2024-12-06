@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getOrders } from '../../db/testdb'; // 引入 getOrders 方法
+import { getOrders } from '../../db/database'; // 引入 getOrders 方法
 
 // 設定訂單資料型別
 type Order = {
