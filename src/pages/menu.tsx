@@ -30,7 +30,7 @@ const Home: React.FC = () => {
     });
   };
 
-  const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+  const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(0);
 
   const handleCheckout = async () => {
     try {
