@@ -8,7 +8,6 @@ const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // 這裡可以處理提交的邏輯，如發送聯絡表單的內容
     console.log({ name, email, message });
     alert('感謝您的聯絡，會儘快回覆您！');
   };

@@ -1,0 +1,43 @@
+-- 刪除現有的表（如果存在）
+DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS orders;
+
+-- 訂單表
+CREATE TABLE IF NOT EXISTS orders (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  totalAmount REAL
+);
+
+-- 訂單項目表
+CREATE TABLE IF NOT EXISTS order_items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  orderId INTEGER,
+  itemName TEXT,
+  price REAL,
+  quantity INTEGER,
+  FOREIGN KEY (orderId) REFERENCES orders(id) ON DELETE CASCADE
+);
+
+
+
+===========================
+
+BEGIN TRANSACTION;
+
+-- 新增訂單
+INSERT INTO orders (totalAmount) VALUES (400.0);
+
+-- 假設新插入的訂單 id 是 1
+-- 新增訂單項目
+INSERT INTO order_items (orderId, itemName, price, quantity)
+VALUES 
+    (1, '牛肉麵', 120.0, 2),
+    (1, '珍珠奶茶', 80.0, 2);
+
+COMMIT;
+
+
+===========================================
+
+select * from orders;
+select * from order_items;
