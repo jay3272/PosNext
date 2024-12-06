@@ -1,0 +1,28 @@
+.container {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .cartItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .name {
+    font-weight: bold;
+  }
+  
+  .quantity {
+    color: #888;
+  }
+  
+  .price {
+    color: #3498db;
+  }
+  
+  .cartTitle {
+    font-size: 24px;
+    color: #3498db;
+  }
+  
