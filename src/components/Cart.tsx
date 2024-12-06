@@ -24,7 +24,7 @@ const Cart: React.FC<CartProps> = ({ items }) => (
             <div className={styles.name}>{item.name}</div>
             <div className={styles.quantity}>x{item.quantity}</div>
             <div className={styles.price}>
-              ${(item.price * item.quantity).toFixed(2)}
+              ${(item.price * item.quantity).toFixed(0)}
             </div>
           </div>
         ))
