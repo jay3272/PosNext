@@ -46,7 +46,7 @@ const Home: React.FC = () => (
               <CardContent>
                 <Typography variant="h6">{item.name}</Typography>
                 <Typography variant="body2" color="textSecondary">
-                  ${item.price.toFixed(2)}
+                  ${item.price.toFixed(0)}
                 </Typography>
               </CardContent>
             </Card>
