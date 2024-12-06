@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'; 
-import { insertOrder, getOrders} from '../../db/database'; // 引入資料庫
+import { insertOrder } from '../../db/database'; // 引入資料庫
 
 type CartItem = {
   id: number;
@@ -16,7 +16,7 @@ type CheckoutRequest = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // 處理 POST 請求
   if (req.method === 'POST') {
-    const { cart, totalAmount }: CheckoutRequest = req.body;
+    const { totalAmount }: CheckoutRequest = req.body;
 
     // 確保 totalAmount 是有效的數字
     const totalAmountParsed = parseFloat(totalAmount);

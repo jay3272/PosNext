@@ -1,13 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getOrders } from '../../db/database'; // 引入 getOrders 方法
 
-// 設定訂單資料型別
-type Order = {
-  id: number;
-  totalAmount: string;
-  items: string;  // 以逗號分隔的商品清單，例如 "漢堡 (x2), 鰻魚飯 (x1)"
-};
-
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {

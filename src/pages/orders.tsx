@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Box, Grid, Card, CardContent, CircularProgress } from '@mui/material';
 
-type CartItem = {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-};
-
 type Order = {
   id: number;
   totalAmount: string;
@@ -28,8 +21,12 @@ const Orders: React.FC = () => {
         }
         const data = await response.json();
         setOrders(data);
-      } catch (err: any) {
-        setError(err.message || '發生未知錯誤');
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+            setError(err.message || '發生未知錯誤');
+          } else {
+            setError('發生未知錯誤');
+          }
       } finally {
         setLoading(false);
       }
