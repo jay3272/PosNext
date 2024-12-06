@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Typography, Box, Grid, Button, Card, CardContent, CardMedia } from '@mui/material';
-import MenuItem from '../components/MenuItem'; // 如果有設計菜單項目組件
 
 const menu = [
   { id: 1, name: "漢堡", price: 5.99, image: '/images/hamburger.jpg' },

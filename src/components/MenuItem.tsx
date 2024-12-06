@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "../components/MenuItem.module.scss";
+import React from 'react';
+import { Card, CardContent, CardMedia, Typography, Button } from '@mui/material';
 
 interface MenuItemProps {
   id: number;
@@ -9,15 +9,22 @@ interface MenuItemProps {
   onAddToCart: () => void;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ name, price, image, onAddToCart }) => (
-  <li className={styles.menuItem}>
-    <img src={image} alt={name} />
-    <div>
-      <p>{name}</p>
-      <p>${price.toFixed(2)}</p>
-    </div>
-    <button onClick={onAddToCart}>Add to Cart</button>
-  </li>
+const MenuItem: React.FC<MenuItemProps> = ({ id, name, price, image, onAddToCart }) => (
+  <Card sx={{ maxWidth: 345 }}>
+    <CardMedia component="img" height="140" image={image} alt={name} />
+    <CardContent>
+      <Typography variant="h6">{name}</Typography>
+      <Typography variant="body2" color="textSecondary">
+        ${price.toFixed(2)}
+      </Typography>
+      <Typography variant="body2" color="textSecondary">
+        商品ID: {id}
+      </Typography>
+      <Button variant="contained" color="primary" onClick={onAddToCart} sx={{ marginTop: 2 }}>
+        加入購物車
+      </Button>
+    </CardContent>
+  </Card>
 );
 
 export default MenuItem;
